@@ -1,0 +1,5 @@
+<button (click)="getHeroes();" class="btn btn-default" type="button" style="width:100%;">Get Hero</button>
+
+<ul>
+    <li *ngFor="let hero of allHeroes">{{hero.name}}</li>
+</ul>
