@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import {Hero} from '../../modules/hero/hero.module';
-import {GetHeroesService} from '../../services/getHeroes/get-heroes.service';
+import { GetHeroesService } from '../../services/getHeroes/get-heroes.service';
 
 @Component({
   selector: 'main-area',
   templateUrl: `app/components/mainArea/main-area.template.html`,
-  providers: [GetHeroesService]
 })
 
-export class MainAreaComponent  {
+export class MainAreaComponent {
 
+  // A variable which stores the data sent from the GetHeroesService pipe (Observable).
   allHeroes: any;
 
+  // Constructor which enables the use of the GetHeroesService.
+  // When this component is initialized we immediately start 'listening' to the
+  // 'pipe' (Observable) for data. When data is received it is stored in the 'allHeroes' variable.
   constructor(private _getHeroesService: GetHeroesService) {
-    this._getHeroesService.getHeroes().subscribe(heroes => {
-      this.allHeroes = heroes;
-    });
+      this._getHeroesService.getHeroesStream$.subscribe(heroes => this.allHeroes = heroes);
   }
 }

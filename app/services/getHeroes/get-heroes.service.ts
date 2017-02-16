@@ -1,42 +1,44 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {Hero} from '../../modules/hero/hero.module';
-import {Subject, Observable, Observer, BehaviorSubject} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx'; // Third-pary library for using Observables
 
+// Decorator which labels this file as a 'service'
 @Injectable()
 export class GetHeroesService {
 
-    private urlbase: string = 'http://angular2-workshop.azurewebsites.net/api/heroes';
-
-    // opt 1
+    // A private observer which is the only one that pushes data in the 'pipe' (Observable)
     private _getHeroesObserver: any;
-    getHeroesStream$: Observable<Hero[]>;
+    // A public stream which any component can listen to (sibscribe) and receive data
+    getHeroesStream$: Observable<any>;
 
-    // opt 2
-    private authenticatedSource = new Subject<Hero[]>();
-    authenticated$ = this.authenticatedSource.asObservable();
-
+    // Http as a param in the constructor makes this function available to use in the class
     constructor(private _http: Http) {
-        this.getHeroesStream$ = new Observable((obs: any) => this._getHeroesObserver = obs).share();
-
+        // Instansiate the Observable and store the Observer object in the _getHeroesObserver.
+        this.getHeroesStream$ = new Observable((obs: any) => {
+            this._getHeroesObserver = obs;
+        }).share(); // Must be double checked: share() enables several components to listen (subscribe) to the data stream ?
     }
 
-    getHeroes(): Observable<Hero[]> {
-       return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes')
-        .map(response => response.json())
-        .do(data => data as Hero[]);
-    }
-
-  /*   getHeroes(): Observable<Hero[]> {
+    // A call to this method will enable the REST call to our azure service, which returns 12 items with three properties
+    getHeroes() {
          return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes')
-            .map(response => response.json().data as Hero[])
-            .do(data => this._getHeroesObserver.next(data));
-    }*/
-
-    //opt 2
-   /* getHeroes() {
-        return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes')
-            .map(response => response.json().data as Hero[])
-             .do(data => this.authenticatedSource.next(data));
-    }*/
+            .map(response => response.json()) // For every respons received from the call, map the result to json format
+            .subscribe(data => this._getHeroesObserver.next(data)); // For every json data we map, make the Observer push the json data in the data pipe
+    }
 }
+
+
+  /* Example of same service call but with Http Headers
+  getHeroes() {
+         return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes', {
+            method: 'GET',
+                headers: new Headers([
+                    'Allow', 'GET',
+                    'Accept', 'application/json',
+                    'Content-Type', 'application/json'
+                ])
+            })
+            .map(response => response.json())
+            .subscribe(data => this._getHeroesObserver.next(data));
+    }
+    */

@@ -1,5 +1,3 @@
-<button (click)="getHeroes();" class="btn btn-default" type="button" style="width:100%;">Get Hero</button>
-
-<ul>
-    <li *ngFor="let hero of allHeroes">{{hero.name}}</li>
-</ul>
+<!-- A button with an 'output' event named 'click' which calls the getAllHeroes method in the component class.
+    A call which triggers a call to the REST service in GetHeroesService class -->
+<button (click)="getAllHeroes();" class="btn btn-default" type="button" style="width:100%;">Get Hero</button>

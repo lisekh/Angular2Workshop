@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+// This component is not the root component. In this case we can see that it wraps all other components we created.
+
 @Component({
   selector: 'my-app',
   template: `
@@ -12,6 +14,8 @@ import { Component } from '@angular/core';
   </div>
   `,
 })
-export class AppComponent  { 
-  name = 'Angular'; 
+export class AppComponent  {
+
+  // A rendering tag is used to show the content of the 'name' variable
+  name = 'Angular';
 }

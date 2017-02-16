@@ -1,8 +1,19 @@
 <div class="col-md-10" style="margin-top:20px;background-color:lightgray;padding:2em;">
-
-    <div class="hero-list">
-        <ul>
-            <li *ngFor="let hero of allHeroes">{{hero.Id}} - {{hero.Name}} - {{hero.Power}}</li>
-        </ul>
-    </div>
+    
+    <!-- A list where we list out all the element in the component variable 'allHeroes' with the help of
+        a loop directive '*ngFor. For each element in the 'allHeroes' list we call each item 'hero'.
+        We then use rendering tag '{{}}' to get the data from the item -->
+    <ul>
+        <li *ngFor="let hero of allHeroes">
+            ID: {{hero.Id}} - Name: <strong>{{hero.Name}}</strong> - Power: <i>{{hero.Power}}</i>
+        </li>
+    </ul>
 </div>
+
+<!-- JSON object received from the REST service call:
+
+    Id: ... ,
+    Name: ... ,
+    Power: ...
+
+ -->
