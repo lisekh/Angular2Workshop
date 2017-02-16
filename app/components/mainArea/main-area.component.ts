@@ -11,6 +11,9 @@ export class MainAreaComponent {
   // A variable which stores the data sent from the GetHeroesService pipe (Observable).
   allHeroes: any;
 
+  // Title of the list
+  allHeroesTitle: string = 'All my heroes';
+
   // Constructor which enables the use of the GetHeroesService.
   // When this component is initialized we immediately start 'listening' to the
   // 'pipe' (Observable) for data. When data is received it is stored in the 'allHeroes' variable.
