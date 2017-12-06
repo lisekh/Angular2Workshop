@@ -1,21 +1,30 @@
 <div class="col-md-10" style="margin-top:20px;background-color:lightgray;padding:2em;">
-    
-    
+
     <div *ngIf="allHeroes">
         <h1>{{allHeroesTitle}}</h1>
 
         <!-- A list where we list out all the element in the component variable 'allHeroes' with the help of
         a loop directive '*ngFor. For each element in the 'allHeroes' list we call each item 'hero'.
         We then use rendering tag '{{}}' to get the data from the item -->
-        <ul>
-            <li *ngFor="let hero of allHeroes">
-                ID: {{hero.Id}} - Name: <strong>{{hero.Name}}</strong> - Power: <i>{{hero.Power}}</i>
-            </li>
-        </ul>
-    </div>    
-</div>
+        <section *ngFor="let hero of allHeroes" style="padding:1em 2em;border:0.2em solid black;background-color:rgb(191, 251, 252);">
+            <h3>Name: {{hero.name}}</h3>
+            <h4>Type: {{hero.type}}</h4>
+            <p>
+                <i>Powers: </i>
+                <span *ngFor="let power of hero.powers">{{power}} -</span>
+            </p>
+            <p><i>Weakness: </i> {{hero.weakness}}</p>
+            <p><i>Biography: </i>{{hero.bio}}</p>
+        </section>
+    </div>
 
-<!-- JSON object received from the REST service call:
+
+
+
+
+
+
+    <!-- JSON object received from the REST service call:
 
     Id: ... ,
     Name: ... ,

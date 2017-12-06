@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx'; // Third-pary library for using Observables
+import { RequestOptions } from '@angular/http/src/base_request_options';
 
 // Decorator which labels this file as a 'service'
 @Injectable()
@@ -21,24 +22,34 @@ export class GetHeroesService {
 
     // A call to this method will enable the REST call to our azure service, which returns 12 items with three properties
     getHeroes() {
-         return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes')
+         return this._http.get('https://api.heroes.bigstickcarpet.com/characters')
             .map(response => response.json()) // For every respons received from the call, map the result to json format
             .subscribe(data => this._getHeroesObserver.next(data)); // For every json data we map, make the Observer push the json data in the data pipe
     }
+
+    // Example of same service call but with Http Headers
+  /*  getHeroes() {
+        let myHeader = new Headers();
+        myHeader.append('Content-Type', 'application/json');
+        let myParams;
+        let options = new RequestOptions({headers: myHeader, params: myParams});
+
+        return this._http.get('https://docs.opendota.com/#tag/heroes', myHeader)
+        //.map(response => response.json())
+        .subscribe(data => this._getHeroesObserver.next(data));
+    }*/
 }
 
-
-  /* Example of same service call but with Http Headers
-  getHeroes() {
-         return this._http.get('http://angular2-workshop.azurewebsites.net/api/heroes', {
-            method: 'GET',
-                headers: new Headers([
-                    'Allow', 'GET',
-                    'Accept', 'application/json',
-                    'Content-Type', 'application/json'
-                ])
-            })
-            .map(response => response.json())
-            .subscribe(data => this._getHeroesObserver.next(data));
-    }
-    */
+/*
+        return this._http.get('https://docs.opendota.com/#tag/heroes', {
+        method: 'GET',
+            headers: new Headers([
+                'Allow', 'GET',
+                'Accept', 'application/json',
+                'Content-Type', 'application/json'
+            ])
+        })
+        .map(response => response.json())
+        .subscribe(data => this._getHeroesObserver.next(data));
+*/  
+    

@@ -18,6 +18,8 @@ export class MainAreaComponent {
   // When this component is initialized we immediately start 'listening' to the
   // 'pipe' (Observable) for data. When data is received it is stored in the 'allHeroes' variable.
   constructor(private _getHeroesService: GetHeroesService) {
-      this._getHeroesService.getHeroesStream$.subscribe(heroes => this.allHeroes = heroes);
+      this._getHeroesService.getHeroesStream$.subscribe(heroes => {
+        this.allHeroes = heroes;
+      });
   }
 }
